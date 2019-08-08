@@ -52,6 +52,7 @@ if __name__ == '__main__':
         # TODO: Get the last proof from the server and look for a new one
         r = requests.get(url = node + "/last_proof")
         # TODO: When found, POST it to the server {"proof": new_proof}
+        new_proof = proof_of_work(last_proof)
         # TODO: We're going to have to research how to do a POST in Python
         # HINT: Research `requests` and remember we're sending our data as JSON
         # TODO: If the server responds with 'New Block Forged'
