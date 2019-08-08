@@ -80,13 +80,13 @@ class Blockchain(object):
         Find a number p such that hash(last_block_string, p) contains 6 leading
         zeroes
         """
-         proof = 0
-        while valid_proof(last_proof , proof) :
+        proof = 0
+        while self.valid_proof(last_proof , proof) is False:
             proof +=1
 
         return proof
 
-        pass
+
 
     @staticmethod
     def valid_proof(last_proof, proof):
@@ -95,11 +95,13 @@ class Blockchain(object):
         leading zeroes?
         """
         # TODO
+        #build string to hash
         guess = f'{last_proof}{proof}'.encode()
-        guess_hash = hashlid.sha256(guess).hexdigest()
+        # use hash function
+        guess_hash = hashlib.sha256(guess).hexdigest()
         #Check if 6 leading 0's
         beg = guess_hash[0:6] #[:6]
-        if beg == "0000000":
+        if beg == "000000":
             return True
         else:
             return False
@@ -157,7 +159,7 @@ def mine():
     blockchain.new_transaction(0, node_identifier, 1)
 
     # Forge the new Block by adding it to the chain
-    blockchain.new_block(proof, )
+    block = blockchain.new_block(proof, blockchain.hash(blockchain.last_block))
 
     # Send a response with the new block
     response = {
