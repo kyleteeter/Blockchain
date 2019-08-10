@@ -149,7 +149,8 @@ class Blockchain(object):
             current_index += 1
 
         return True
-
+    
+    # Alert all nodes to add a block
 
 # Instantiate our Node
 app = Flask(__name__)
