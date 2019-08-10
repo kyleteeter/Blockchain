@@ -217,7 +217,7 @@ def last_block_string():
     response = {
         # TODO: Return the chain and its current length
         'last_block_string': blockchain.last_block
-
+    }
     return jsonify(response), 200
 
 
