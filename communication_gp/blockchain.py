@@ -1,7 +1,6 @@
 # Paste your version of blockchain.py from the client_mining_p
 # folder here
-# Paste your version of blockchain.py from the basic_block_gp
-# folder here
+
 import hashlib
 import json
 from time import time
@@ -17,6 +16,19 @@ class Blockchain(object):
         self.nodes = set()
 
         self.new_block(previous_hash=1, proof=99)
+    
+        def create_genesis_block(self):
+
+            block = {
+                'index': 1,
+                'timestamp': 0,
+                'transactions': [],
+                'proof': 99,
+                'previous_hash': 1,
+            }
+
+            #TODO: Reset transactions
+            self.chain.append(block)
 
     def new_block(self, proof, previous_hash=None):
         """
