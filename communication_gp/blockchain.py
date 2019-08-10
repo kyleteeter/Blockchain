@@ -7,6 +7,7 @@ from time import time
 from uuid import uuid4
 
 from flask import Flask, jsonify, request
+from urllib.parse import urlparse
 
 
 class Blockchain(object):
@@ -150,8 +151,11 @@ class Blockchain(object):
 
         return True
     # Register New Node
+    def register_node(self, address):
 
-    
+        parsed_url = urlparse(address)
+        self.nodes.add(parsed_url.netloc)
+
     # Alert all nodes to add a block
     def alert_all_nodes(self, block):
         post_data = {'block':block}
