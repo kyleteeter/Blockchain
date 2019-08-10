@@ -142,10 +142,12 @@ class Blockchain(object):
             print("\n-------------------\n")
             # Check that the hash of the block is correct
             # TODO: Return false if hash isn't correct
-
+            if block['previous_hash'] != self.hash(last_block_string):
+                return False
             # Check that the Proof of Work is correct
             # TODO: Return false if proof isn't correct
-
+            if not self.valid_proof(last_block_string['proof'], block['proof']):
+                return False
             last_block = block
             current_index += 1
 
