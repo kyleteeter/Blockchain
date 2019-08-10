@@ -34,7 +34,7 @@ def valid_proof(last_block_string, proof):
     guess_hash = hashlib.sha256(guess).hexdigest()
     #Check if 6 leading 0's
     beg = guess_hash[0:6] #[:6]
-    if beg == "000000":
+    if beg == "0000":
         return True
     else:
         return False
@@ -45,7 +45,7 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         node = sys.argv[1]
     else:
-        node = "http://localhost:4000"
+        node = "http://localhost:5000"
 
     coins_mined = 0
     # Run forever until interrupted
