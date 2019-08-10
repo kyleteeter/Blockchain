@@ -8,14 +8,14 @@ import sys
 
 # Run the proof_of_work function until a valid proof is found, validating or rejecting each attempt
 
-def proof_of_work(self, last_proof):
+def proof_of_work(last_proof):
     """
     Simple Proof of Work Algorithm
     Find a number p such that hash(last_block_string, p) contains 6 leading
     zeroes
     """
     proof = 0
-    while self.valid_proof(last_proof , proof) is False:
+    while valid_proof(last_proof , proof) is False:
         proof +=1
 
     return proof
@@ -44,7 +44,7 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         node = sys.argv[1]
     else:
-        node = "http://localhost:5000"
+        node = "http://localhost:4000"
 
     coins_mined = 0
     # Run forever until interrupted
@@ -55,7 +55,14 @@ if __name__ == '__main__':
         new_proof = proof_of_work(last_proof)
         # TODO: We're going to have to research how to do a POST in Python
         # HINT: Research `requests` and remember we're sending our data as JSON
+        data = {'proof': new_proof}
         # TODO: If the server responds with 'New Block Forged'
+        r = requests.post(url = node+'mine', data = data)
         # add 1 to the number of coins mined and print it.  Otherwise,
+        if r.message == "New Block Forged"
+            coins_mined += 1
+            print("You have " + str(coins_mined) + "coins")
+
         # print the message from the server.
+        print(r.message)
         pass

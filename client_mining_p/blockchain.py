@@ -76,29 +76,29 @@ class Blockchain(object):
     def last_block(self):
         return self.chain[-1]
 
-    def proof_of_work(self, last_proof):
-        """
-        Simple Proof of Work Algorithm
-        Find a number p such that hash(last_block_string, p) contains 6 leading
-        zeroes
-        """
-        proof = 0
-        while self.valid_proof(last_proof , proof) is False:
-            proof +=1
+    # def proof_of_work(self, last_proof):
+    #     """
+    #     Simple Proof of Work Algorithm
+    #     Find a number p such that hash(last_block_string, p) contains 6 leading
+    #     zeroes
+    #     """
+    #     proof = 0
+    #     while self.valid_proof(last_proof , proof) is False:
+    #         proof +=1
 
-        return proof
+    #     return proof
 
 
 
     @staticmethod
-    def valid_proof(last_proof, proof):
+    def valid_proof(last_block_string, proof):
         """
         Validates the Proof:  Does hash(block_string, proof) contain 6
         leading zeroes?
         """
         # TODO
         #build string to hash
-        guess = f'{last_proof}{proof}'.encode()
+        guess = f'{last_block_string}{proof}'.encode()
         # use hash function
         guess_hash = hashlib.sha256(guess).hexdigest()
         #Check if 6 leading 0's
@@ -147,13 +147,14 @@ node_identifier = str(uuid4()).replace('-', '')
 blockchain = Blockchain()
 
 
-@app.route('/mine', methods=['GET'])
+@app.route('/mine', methods=['POST'])
 def mine():
     # We run the proof of work algorithm to get the next proof...
-    proof = blockchain.proof_of_work(blockchain.last_block)
+    # proof = blockchain.proof_of_work(blockchain.last_block)
 
     # We must receive a reward for finding the proof.
     # TODO:
+    values = request.get_json()
     # The sender is "0" to signify that this node has mine a new coin
     # The recipient is the current node, it did the mining!
     # The amount is 1 coin as a reward for mining the next block
@@ -192,13 +193,12 @@ def new_transaction():
     return jsonify(response), 201
 
 
-@app.route('/chain', methods=['GET'])
-def full_chain():
+@app.route('/last-proof', methods=['GET'])
+def last_proof():
     response = {
         # TODO: Return the chain and its current length
-        'currentChain': blockchain.chain,
-        'length': len(blockchain.chain)
-    }
+        'last_proof': blockchain.last_block
+
     return jsonify(response), 200
 
 
