@@ -149,9 +149,18 @@ class Blockchain(object):
             current_index += 1
 
         return True
+    # Register New Node
+
     
     # Alert all nodes to add a block
+    def alert_all_nodes(self, block):
+        post_data = {'block':block}
 
+        for node in self.nodes:
+            r = requests.post(f'http://{node}/block/new', json=post_data)
+
+            if r.status_code != 200:
+                pass
 # Instantiate our Node
 app = Flask(__name__)
 
